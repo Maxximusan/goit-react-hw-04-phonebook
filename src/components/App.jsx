@@ -5,25 +5,30 @@ import { ContactList } from 'components/Contacts/Contacts'
 import { Filter } from 'components/Filter/Filter'
 import css from 'components/App.module.css'
 
-export const App = () => {
+// !!!!!! Вариант написания собственного хука (который потом в папку hooks идет) - для случаев с повторяющимся кодом (например у нас несколько useState используют local storage и несколько useEffect соответственно).
+// const useLocalStorage = (key, defaultValue) => {
+//   const [state, setState] = useState(() => {
+//     return JSON.parse(window.localStorage.getItem(key)) ?? defaultValue
+//   })
+//   useEffect(() => {
+//     window.localStorage.setItem(key, JSON.stringify(state))
+//   }, [key, state]);
 
-  const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem('contacts')) ?? []); 
-  const [filter, setFilter] = useState('');
+//   return [state, setState]
+// }
+
+
+export const App = () => {
+  // Таким образом записывать при использовании примера собственного хука выше
+// const [contacts, setContacts] = useLocalStorage('contacts', []); 
+
+const [contacts, setContacts] = useState(JSON.parse(window.localStorage.getItem('contacts')) ?? []);
+    const [filter, setFilter] = useState('');
 
  
-  // useEffect(() => {
-  //     const contactsLS = localStorage.getItem('contacts')
-  //   const parsedContacts = JSON.parse(contactsLS)
-  //   if(parsedContacts){
-  //     setContacts(parsedContacts )
-  //   }
-  // }, []);
-
-  useEffect(() => {
+   useEffect(() => {
     window.localStorage.setItem('contacts', JSON.stringify(contacts))
   }, [contacts]);
-
-
 
 
   
@@ -78,3 +83,5 @@ export const App = () => {
 
   
 };
+
+
